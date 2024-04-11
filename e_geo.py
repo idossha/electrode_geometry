@@ -6,7 +6,7 @@ def solve_potential_2d_medium(
     grid_size=100,
     medium_radius=0.5,
     electrode_radius=0.005,
-    current=1.0,
+    current=3.0,
     conductivity=1.0,
     voltage_scale=1,
 ):

@@ -55,16 +55,22 @@ Jy_large = Ey_large * 1.0
 J_magnitude_small = np.sqrt(Jx_small**2 + Jy_small**2)
 J_magnitude_large = np.sqrt(Jx_large**2 + Jy_large**2)
 
+# Calculate electric field components
+Ex_small_scaled = Ex_small / voltage_scale
+Ey_small_scaled = Ey_small / voltage_scale
+Ex_large_scaled = Ex_large / voltage_scale
+Ey_large_scaled = Ey_large / voltage_scale
+
 # Find global minimum and maximum of potential for consistent scaling
 v_min = min(np.min(V_2d_small), np.min(V_2d_large))
 v_max = max(np.max(V_2d_small), np.max(V_2d_large))
 
 # Plotting with adjusted layout and improved annotations
-plt.figure(figsize=(12, 12))
+plt.figure(figsize=(18, 12))
 plt.subplots_adjust(wspace=0.4, hspace=0.4)
 
 # Plotting potential for 50mm diameter electrodes
-plt.subplot(2, 2, 1)
+plt.subplot(2, 3, 1)
 contour50 = plt.contourf(
     X_2d_small,
     Y_2d_small,
@@ -79,7 +85,7 @@ plt.title("Potential with 50mm Electrodes")
 plt.axis("equal")
 
 # Plotting current density streamlines for 50mm diameter electrodes with annotations
-plt.subplot(2, 2, 2)
+plt.subplot(2, 3, 2)
 plt.streamplot(X_2d_small, Y_2d_small, Jx_small, Jy_small, color="#FF9999", density=2)
 for point in [(50, 50), (30, 70), (70, 30)]:
     plt.plot(X_2d_small[point], Y_2d_small[point], "wo")  # Mark the point
@@ -96,8 +102,22 @@ plt.ylabel("Y (m)")
 plt.title("Current Density with 50mm Electrodes")
 plt.axis("equal")
 
+# Plotting electric field for 50mm diameter electrodes
+plt.subplot(2, 3, 3)
+plt.quiver(
+    X_2d_small[::5, ::5],
+    Y_2d_small[::5, ::5],
+    Ex_small_scaled[::5, ::5],
+    Ey_small_scaled[::5, ::5],
+    scale=30,
+)
+plt.xlabel("X (m)")
+plt.ylabel("Y (m)")
+plt.title("Electric Field with 50mm Electrodes")
+plt.axis("equal")
+
 # Plotting potential for 25mm diameter electrodes
-plt.subplot(2, 2, 3)
+plt.subplot(2, 3, 4)
 contour25 = plt.contourf(
     X_2d_large,
     Y_2d_large,
@@ -112,7 +132,7 @@ plt.title("Potential with 25mm Electrodes")
 plt.axis("equal")
 
 # Plotting current density streamlines for 25mm diameter electrodes with annotations
-plt.subplot(2, 2, 4)
+plt.subplot(2, 3, 5)
 plt.streamplot(X_2d_large, Y_2d_large, Jx_large, Jy_large, color="#FF9999", density=2)
 for point in [(50, 50), (30, 70), (70, 30)]:
     plt.plot(X_2d_large[point], Y_2d_large[point], "wo")  # Mark the point
@@ -127,6 +147,20 @@ for point in [(50, 50), (30, 70), (70, 30)]:
 plt.xlabel("X (m)")
 plt.ylabel("Y (m)")
 plt.title("Current Density with 25mm Electrodes")
+plt.axis("equal")
+
+# Plotting electric field for 25mm diameter electrodes
+plt.subplot(2, 3, 6)
+plt.quiver(
+    X_2d_large[::5, ::5],
+    Y_2d_large[::5, ::5],
+    Ex_large_scaled[::5, ::5],
+    Ey_large_scaled[::5, ::5],
+    scale=30,
+)
+plt.xlabel("X (m)")
+plt.ylabel("Y (m)")
+plt.title("Electric Field with 25mm Electrodes")
 plt.axis("equal")
 
 plt.tight_layout()

@@ -9,4 +9,4 @@ given a 2D conductive isotropic medium and two different electrode geometries.
 
 ---
 
-![Figure 1](Figure_1.png)
+![Figure 1](Figure.png)

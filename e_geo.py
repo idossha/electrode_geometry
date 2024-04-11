@@ -2,10 +2,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def solve_potential_2d_medium(
+def electrode_geomtry_impact(
     grid_size=100,
     medium_radius=0.5,
-    electrode_radius=0.005,
+    electrode_radius=0.05,
     current=3.0,
     conductivity=1.0,
     voltage_scale=1,
@@ -38,10 +38,10 @@ def solve_potential_2d_medium(
 
 # Parameters and solving for potential
 voltage_scale = 1
-X_2d_small, Y_2d_small, V_2d_small = solve_potential_2d_medium(
+X_2d_small, Y_2d_small, V_2d_small = electrode_geomtry_impact(
     electrode_radius=0.050, voltage_scale=voltage_scale
 )
-X_2d_large, Y_2d_large, V_2d_large = solve_potential_2d_medium(
+X_2d_large, Y_2d_large, V_2d_large = electrode_geomtry_impact(
     electrode_radius=0.025, voltage_scale=voltage_scale
 )
 
@@ -79,7 +79,7 @@ contour50 = plt.contourf(
     levels=np.linspace(v_min, v_max, 50),
     cmap="RdBu",
 )
-plt.colorbar(contour50, label="Potential (V/m)")
+plt.colorbar(contour50, label="Potential (V)")
 plt.xlabel("X (m)")
 plt.ylabel("Y (m)")
 plt.title("Potential with 50mm Electrodes")
@@ -132,7 +132,7 @@ contour25 = plt.contourf(
     levels=np.linspace(v_min, v_max, 50),
     cmap="RdBu",
 )
-plt.colorbar(contour25, label="Potential (V/m)")
+plt.colorbar(contour25, label="Potential (V)")
 plt.xlabel("X (m)")
 plt.ylabel("Y (m)")
 plt.title("Potential with 25mm Electrodes")

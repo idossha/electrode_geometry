@@ -65,6 +65,7 @@ Ey_large_scaled = Ey_large / voltage_scale
 v_min = min(np.min(V_2d_small), np.min(V_2d_large))
 v_max = max(np.max(V_2d_small), np.max(V_2d_large))
 
+
 # Plotting with adjusted layout and improved annotations
 plt.figure(figsize=(18, 12))
 plt.subplots_adjust(wspace=0.4, hspace=0.4)
@@ -102,14 +103,20 @@ plt.ylabel("Y (m)")
 plt.title("Current Density with 50mm Electrodes")
 plt.axis("equal")
 
-# Plotting electric field for 50mm diameter electrodes
+# Plotting electric field for 50mm diameter electrodes with color based on magnitude
 plt.subplot(2, 3, 3)
+electric_field_magnitude_small = np.sqrt(Ex_small_scaled**2 + Ey_small_scaled**2)
 plt.quiver(
     X_2d_small[::5, ::5],
     Y_2d_small[::5, ::5],
     Ex_small_scaled[::5, ::5],
     Ey_small_scaled[::5, ::5],
+    electric_field_magnitude_small[::5, ::5],  # Use magnitude for color
     scale=30,
+    cmap="viridis",  # Use a colormap for coloring vectors
+)
+plt.colorbar(
+    label="Electric Field Magnitude (V/m)",
 )
 plt.xlabel("X (m)")
 plt.ylabel("Y (m)")
@@ -149,15 +156,19 @@ plt.ylabel("Y (m)")
 plt.title("Current Density with 25mm Electrodes")
 plt.axis("equal")
 
-# Plotting electric field for 25mm diameter electrodes
+# Plotting electric field for 25mm diameter electrodes with color based on magnitude
 plt.subplot(2, 3, 6)
+electric_field_magnitude_large = np.sqrt(Ex_large_scaled**2 + Ey_large_scaled**2)
 plt.quiver(
     X_2d_large[::5, ::5],
     Y_2d_large[::5, ::5],
     Ex_large_scaled[::5, ::5],
     Ey_large_scaled[::5, ::5],
+    electric_field_magnitude_large[::5, ::5],  # Use magnitude for color
     scale=30,
+    cmap="viridis",  # Use a colormap for coloring vectors
 )
+plt.colorbar(label="Electric Field Magnitude (V/m)")
 plt.xlabel("X (m)")
 plt.ylabel("Y (m)")
 plt.title("Electric Field with 25mm Electrodes")
